@@ -1,0 +1,4 @@
+python3-discovery: copyright-without-copyright-notice
+python3-discovery: initial-upload-closes-no-bugs
+python3-discovery: no-manual-page
+python3-discovery: zero-byte-file-in-doc-directory
