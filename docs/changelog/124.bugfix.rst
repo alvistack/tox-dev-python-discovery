@@ -1,0 +1,2 @@
+Prefer the version-matched system executable when CPython reports an existing generic executable for a copied POSIX
+virtual environment.
