@@ -7,6 +7,23 @@
 .. towncrier release notes start
 
 ********************
+ v1.5.3 (2026-08-24)
+********************
+
+Bug fixes - 1.5.3
+=================
+- Restore discovery of Python 3.6 and 3.7 interpreters: the interrogation script had grown 3.8-only syntax and is now
+  kept to Python 3.6. Candidates below 3.6 log one warning naming the version found instead of two debug-level query
+  attempts, and the verdict is cached so they are queried only once; an absolute-path spec for one raises
+  ``RuntimeError`` with the same message - by :user:`gaborbernat`. (:issue:`116`)
+- Prefer the version-matched system executable when CPython reports an existing generic executable for a copied POSIX
+  virtual environment. (:issue:`124`)
+
+Improved documentation - 1.5.3
+==============================
+- Document the version floors: runs on Python 3.8+, discovers interpreters down to 3.6 - by :user:`gaborbernat`. (:issue:`116`)
+
+********************
  v1.5.1 (2026-07-31)
 ********************
 
