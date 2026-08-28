@@ -7,6 +7,18 @@
 .. towncrier release notes start
 
 ********************
+ v1.6.0 (2026-08-28)
+********************
+
+Features - 1.6.0
+================
+- :attr:`~python_discovery.PythonInfo.system_exe` returns the executable of the system Python an interpreter is based on,
+  falling back to :attr:`~python_discovery.PythonInfo.executable` the way
+  :meth:`~python_discovery.PythonInfo.resolve_to_system` does. :attr:`~python_discovery.PythonInfo.system_executable` is
+  ``None`` until resolution runs, so every consumer had to narrow a value discovery has already settled - by
+  :user:`gaborbernat`. (:issue:`127`)
+
+********************
  v1.5.3 (2026-08-24)
 ********************
 
