@@ -1,0 +1,2 @@
+Treat specs with dot-only version components, such as ``python.``, as literal executable paths instead of raising
+``IndexError`` - by :user:`harbinresearcher`.
