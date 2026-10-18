@@ -7,6 +7,18 @@
 .. towncrier release notes start
 
 ********************
+ v1.6.3 (2026-10-16)
+********************
+
+Bug fixes - 1.6.3
+=================
+- Treat specs with dot-only version components, such as ``python.``, as literal executable paths instead of raising
+  ``IndexError`` - by :user:`harbinresearcher`. (:issue:`147`)
+- Pass PEP 514 ``ExecutableArguments`` to registered Windows interpreters when querying them, so a registration that
+  points at a launcher such as ``py.exe -3.11`` reports the interpreter it selects - by :user:`blouirts123`.
+  (:issue:`148`)
+
+********************
  v1.6.2 (2026-10-10)
 ********************
 
@@ -60,6 +72,14 @@ Bug fixes - 1.5.3
 Improved documentation - 1.5.3
 ==============================
 - Document the version floors: runs on Python 3.8+, discovers interpreters down to 3.6 - by :user:`gaborbernat`. (:issue:`116`)
+
+********************
+ v1.5.2 (2026-08-12)
+********************
+
+Bug fixes - 1.5.2
+=================
+- Move interpreter interrogation into a Python 3.6-compatible collector. (:issue:`117`)
 
 ********************
  v1.5.1 (2026-07-31)
