@@ -7,6 +7,14 @@
 .. towncrier release notes start
 
 ********************
+ v1.6.4 (2026-10-19)
+********************
+
+Improved documentation - 1.6.4
+==============================
+- Clarify the executable paths accepted by ``try_first_with`` in the standalone usage example. (:issue:`150`)
+
+********************
  v1.6.3 (2026-10-16)
 ********************
 
