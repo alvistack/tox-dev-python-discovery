@@ -6,6 +6,20 @@
 
 .. towncrier release notes start
 
+.. _release-1-6-5:
+
+*********************
+ v1.6.5 (2026-10-27)
+*********************
+
+.. _release-1-6-5-packaging:
+
+Packaging
+---------
+
+- Releases now run on the shared tox-dev/github-workflows pipeline, with a locked release toolchain and generated GitHub
+  Release notes (:pr:`164`) by :user:`gaborbernat`.
+
 .. _release-1-6-4:
 
 *********************
