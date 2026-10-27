@@ -6,6 +6,25 @@
 
 .. towncrier release notes start
 
+.. _release-1-6-6:
+
+*********************
+ v1.6.6 (2026-10-27)
+*********************
+
+.. _release-1-6-6-fixed:
+
+Fixed
+-----
+
+- Treat version specifiers with an item that cannot be parsed, such as ``>=3.x``, ``>=3.12 <4`` or ``>=3.12,foo``, as
+  literal executable paths instead of raising a bare ``AssertionError`` or ignoring the item during discovery
+  (:pr:`157`) by :user:`darrenhuai` and :user:`gaborbernat`.
+- Accept relative interpreter paths that step up a directory, such as ``../venv/bin/python``, which were found and
+  queried but never matched the spec (:pr:`158`) by :user:`darrenhuai` and :user:`gaborbernat`.
+- Match ``~=X.Y`` compatible-release specifiers against later minor versions, as PEP 440 defines, instead of only the
+  same minor; ``~=3.10`` now accepts 3.11 and newer 3.x (:pr:`159`) by :user:`darrenhuai` and :user:`gaborbernat`.
+
 .. _release-1-6-5:
 
 *********************

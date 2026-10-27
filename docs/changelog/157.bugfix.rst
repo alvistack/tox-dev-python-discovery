@@ -1,2 +1,0 @@
-Treat version specifiers with an item that cannot be parsed, such as ``>=3.x``, ``>=3.12 <4`` or ``>=3.12,foo``, as
-literal executable paths instead of raising a bare ``AssertionError`` or ignoring the item during discovery.
