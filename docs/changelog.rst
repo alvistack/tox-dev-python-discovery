@@ -6,6 +6,23 @@
 
 .. towncrier release notes start
 
+.. _release-1-6-7:
+
+*********************
+ v1.6.7 (2026-10-28)
+*********************
+
+.. _release-1-6-7-fixed:
+
+Fixed
+-----
+
+- Rank uv's minor version links behind the concrete install on Windows too, where uv creates them as directory junctions
+  that ``Path.is_symlink()`` does not report (:pr:`170`) by :user:`darrenhuai` and :user:`gaborbernat`.
+- Stop a venv lookup from rewriting the ``executable`` of earlier results, ``PythonInfo.current()`` and
+  ``PythonInfo.current_system()`` when they share its base interpreter (:pr:`171`) by :user:`darrenhuai` and
+  :user:`gaborbernat`.
+
 .. _release-1-6-6:
 
 *********************
