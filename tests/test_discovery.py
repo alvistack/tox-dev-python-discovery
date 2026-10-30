@@ -260,6 +260,11 @@ def test_discovery_via_version_specifier(session_cache: DiskCache) -> None:
         assert interpreter.implementation == "CPython"
 
 
+_POSIX_PERMISSIONS: Final[pytest.MarkDecorator] = pytest.mark.skipif(
+    IS_WIN or os.geteuid() == 0, reason="POSIX file permissions, which root bypasses"
+)
+
+
 def _create_version_manager(tmp_path: Path, env_var: str) -> Path:
     root = tmp_path / env_var.lower()
     root.mkdir()
@@ -356,6 +361,61 @@ def test_shim_uses_python_version_file(tmp_path: Path, monkeypatch: pytest.Monke
         mock_from_exe.return_value = None
         get_interpreter("python2.7", [])
         assert mock_from_exe.call_args_list[0][0][0] == str(real_binary)
+
+
+def test_shim_python_version_file_not_utf8(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pyenv_probed: Callable[[], tuple[str, ...]]
+) -> None:
+    (tmp_path / ".python-version").write_bytes(b"# pinned by M\xfcller\n2.7.18\n")
+    monkeypatch.chdir(tmp_path)
+
+    assert pyenv_probed() == ("versions", "2.7.18")
+
+
+@_POSIX_PERMISSIONS
+def test_shim_unreadable_python_version_file_is_skipped(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pyenv_probed: Callable[[], tuple[str, ...]]
+) -> None:
+    (tmp_path / ".python-version").write_text("2.7.18\n", encoding="utf-8")
+    (unreadable := tmp_path / "child" / ".python-version").parent.mkdir()
+    unreadable.write_text("3.12.0\n", encoding="utf-8")
+    unreadable.chmod(0)
+    monkeypatch.chdir(unreadable.parent)
+
+    assert pyenv_probed() == ("versions", "2.7.18")
+
+
+@_POSIX_PERMISSIONS
+def test_shim_unsearchable_directory_is_skipped(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pyenv_probed: Callable[[], tuple[str, ...]]
+) -> None:
+    (tmp_path / ".python-version").write_text("2.7.18\n", encoding="utf-8")
+    (work := tmp_path / "locked" / "work").mkdir(parents=True)
+    monkeypatch.chdir(work)
+    work.parent.chmod(0o600)
+    try:
+        assert pyenv_probed() == ("versions", "2.7.18")
+    finally:
+        work.parent.chmod(0o700)
+
+
+@pytest.fixture
+def pyenv_probed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, mocker: MockerFixture
+) -> Callable[[], tuple[str, ...]]:
+    root = _create_version_manager(tmp_path, "PYENV_ROOT")
+    _create_versioned_binary(root, ("versions",), "2.7.18", "python2.7")
+    (root / "shims" / ("python2.7.exe" if IS_WIN else "python2.7")).touch(mode=0o755)
+    monkeypatch.setenv("PATH", str(root / "shims"))
+    monkeypatch.setenv("PYENV_ROOT", str(root))
+    monkeypatch.delenv("PYENV_VERSION", raising=False)
+    from_exe = mocker.patch("python_discovery._discovery.PathPythonInfo.from_exe", return_value=None)
+
+    def _probed() -> tuple[str, ...]:
+        get_interpreter("python2.7", [])
+        return Path(from_exe.call_args_list[0].args[0]).relative_to(root).parts[:2]
+
+    return _probed
 
 
 def test_shim_pyenv_version_env_takes_priority_over_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

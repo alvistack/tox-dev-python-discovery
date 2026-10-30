@@ -52,7 +52,7 @@ detects these shims and resolves them to the actual binary.
     flowchart TD
         Shim["Shim detected"] --> EnvVar{"PYENV_VERSION<br>set?"}
         EnvVar -->|Yes| Use["Use that version"]
-        EnvVar -->|No| File{".python-version<br>file exists?"}
+        EnvVar -->|No| File{".python-version<br>names a version?"}
         File -->|Yes| Use
         File -->|No| Global{"pyenv global<br>version exists?"}
         Global -->|Yes| Use
