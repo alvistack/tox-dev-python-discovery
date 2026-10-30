@@ -6,6 +6,20 @@
 
 .. towncrier release notes start
 
+.. _release-1-8-0:
+
+*********************
+ v1.8.0 (2026-10-30)
+*********************
+
+.. _release-1-8-0-added:
+
+Added
+-----
+
+- Expose the selected interpreter's dependency marker values as ``PythonInfo.marker_environment`` (:pr:`178`) by
+  :user:`gaborbernat`.
+
 .. _release-1-7-0:
 
 *********************
