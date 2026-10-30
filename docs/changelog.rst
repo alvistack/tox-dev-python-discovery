@@ -6,6 +6,20 @@
 
 .. towncrier release notes start
 
+.. _release-1-9-0:
+
+*********************
+ v1.9.0 (2026-10-30)
+*********************
+
+.. _release-1-9-0-added:
+
+Added
+-----
+
+- Expose the 11 marker keys through ``MarkerEnvironment`` for callers that type-check ``PythonInfo.marker_environment``
+  (:pr:`179`) by :user:`gaborbernat`.
+
 .. _release-1-8-0:
 
 *********************
