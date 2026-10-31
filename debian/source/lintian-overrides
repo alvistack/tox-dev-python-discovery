@@ -1,0 +1,5 @@
+python-python-discovery source: file-without-copyright-information
+python-python-discovery source: no-debian-changes
+python-python-discovery source: source-contains-prebuilt-windows-binary
+python-python-discovery source: source-is-missing
+python-python-discovery source: source-package-encodes-python-version
